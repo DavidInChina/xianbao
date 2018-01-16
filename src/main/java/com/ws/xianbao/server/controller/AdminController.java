@@ -2,18 +2,18 @@ package com.ws.xianbao.server.controller;
 
 import com.ws.xianbao.api.service.UserService;
 import com.ws.xianbao.bean.Admin;
+import com.ws.xianbao.bean.Things;
 import com.ws.xianbao.bean.User;
 import com.ws.xianbao.server.service.AdminService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpSession;
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 @Controller
@@ -34,6 +34,8 @@ public class AdminController {
         if (null != current) {
             model.addAttribute("userCount", adminService.newUserCount());
             model.addAttribute("indexUsers", adminService.indexUsers());
+            model.addAttribute("thingsCount", adminService.newThingsCount());
+            model.addAttribute("indexThings", adminService.indexThings());
         }
         model.addAttribute("projectName", "xianbao");
         return "index";
@@ -44,9 +46,60 @@ public class AdminController {
         return "newslist";
     }
     @GetMapping("/things")
-    public String things(Model model) {
+    public String things(Model model,HttpSession session) {
+        Admin current = (Admin) session.getAttribute(USER_SESSION);
+        if (null != current) {
+            model.addAttribute("allThings", adminService.allThings("0"));
+            model.addAttribute("waitCount", adminService.waitThingsCount());
+            model.addAttribute("passCount", adminService.passThingsCount());
+            model.addAttribute("deniedCount", adminService.deniedThingsCount());
+        }
         model.addAttribute("projectName", "xianbao");
         return "things";
+    }
+
+    @GetMapping("/thingsPassed")
+    public String thingsPassed(Model model,HttpSession session) {
+        Admin current = (Admin) session.getAttribute(USER_SESSION);
+        if (null != current) {
+            model.addAttribute("allThings", adminService.allThings("2"));
+            model.addAttribute("waitCount", adminService.waitThingsCount());
+            model.addAttribute("passCount", adminService.passThingsCount());
+            model.addAttribute("deniedCount", adminService.deniedThingsCount());
+        }
+        model.addAttribute("projectName", "xianbao");
+        return "thingsPassed";
+    }
+    @GetMapping("/thingsDenied")
+    public String thingsDenied(Model model,HttpSession session) {
+        Admin current = (Admin) session.getAttribute(USER_SESSION);
+        if (null != current) {
+            model.addAttribute("allThings", adminService.allThings("1"));
+            model.addAttribute("waitCount", adminService.waitThingsCount());
+            model.addAttribute("passCount", adminService.passThingsCount());
+            model.addAttribute("deniedCount", adminService.deniedThingsCount());
+        }
+        model.addAttribute("projectName", "xianbao");
+        return "thingsDenied";
+    }
+
+    @GetMapping("/thingsPass")
+    public String thingsPass(String passThingsId, Model model, HttpSession session) {
+        Admin current = (Admin) session.getAttribute(USER_SESSION);
+        if (null != current) {
+            adminService.passThings(passThingsId);
+        }
+        return "redirect:/admin/things.html";//返回原页面，刷新数据，没有局部刷新的做法
+    }
+
+    @GetMapping("/thingsDenide")
+    public String thingsDenide(String denideThingsId, Model model, HttpSession session) {
+        Admin current = (Admin) session.getAttribute(USER_SESSION);
+        if (null != current) {
+            adminService.denideThings(denideThingsId);
+        }
+        model.addAttribute("projectName", "xianbao");
+        return "redirect:/admin/things.html";//返回原页面，刷新数据，没有局部刷新的做法
     }
     @GetMapping("/userInfo")
     public String userInfo(Model model) {
@@ -54,8 +107,13 @@ public class AdminController {
         return "userInfo";
     }
     @GetMapping("/users")
-    public String users(Model model) {
+    public String users(Model model,HttpSession session) {
         model.addAttribute("projectName", "xianbao");
+        Admin current = (Admin) session.getAttribute(USER_SESSION);
+        if (null != current) {
+            List<User> allUsers = adminService.allUsers();
+            model.addAttribute("allUsers", allUsers);
+        }
         return "users";
     }
 

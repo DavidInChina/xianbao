@@ -10,10 +10,12 @@
     <result column="usertype" property="usertype" jdbcType="VARCHAR" />
     <result column="regtime" property="regtime" jdbcType="VARCHAR" />
     <result column="lasttime" property="lasttime" jdbcType="VARCHAR" />
+    <result column="publishcount" property="publishcount" jdbcType="VARCHAR" />
+    <result column="pricecount" property="pricecount" jdbcType="VARCHAR" />
     <result column="area" property="area" jdbcType="VARCHAR" />
   </resultMap>
   <sql id="Base_Column_List" >
-    id, account, password, username, userhead, usertype, regtime, lasttime, area
+    id, account, password, username, userhead, usertype, regtime, lasttime, area,publishcount,pricecount
   </sql>
   <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.String" >
     select 
@@ -25,6 +27,12 @@
     select
     <include refid="Base_Column_List" />
     from t_user ORDER BY regtime LIMIT #{maxSize}
+  </select>
+
+  <select id="allUsers" resultMap="BaseResultMap">
+    select
+    <include refid="Base_Column_List" />
+    from t_user ORDER BY regtime
   </select>
   <select id="countNewUser" resultType="java.lang.Integer"  >
     SELECT
@@ -40,11 +48,12 @@
   <insert id="insert" parameterType="com.ws.xianbao.bean.User" >
     insert into t_user (id, account, password, 
       username, userhead, usertype, 
-      regtime, lasttime, area
+      regtime, lasttime, area,publishcount,pricecount
       )
     values (#{id,jdbcType=VARCHAR}, #{account,jdbcType=VARCHAR}, #{password,jdbcType=VARCHAR}, 
       #{username,jdbcType=VARCHAR}, #{userhead,jdbcType=VARCHAR}, #{usertype,jdbcType=VARCHAR}, 
-      #{regtime,jdbcType=VARCHAR}, #{lasttime,jdbcType=VARCHAR}, #{area,jdbcType=VARCHAR}
+      #{regtime,jdbcType=VARCHAR}, #{lasttime,jdbcType=VARCHAR}, #{area,jdbcType=VARCHAR}, #{pricecount,jdbcType=VARCHAR},
+      #{publishcount,jdbcType=VARCHAR}
       )
   </insert>
   <insert id="insertSelective" parameterType="com.ws.xianbao.bean.User" >
@@ -77,6 +86,12 @@
       <if test="area != null" >
         area,
       </if>
+      <if test="pricecount != null" >
+        pricecount,
+      </if>
+      <if test="publishcount != null" >
+        publishcount,
+      </if>
     </trim>
     <trim prefix="values (" suffix=")" suffixOverrides="," >
       <if test="id != null" >
@@ -101,10 +116,16 @@
         #{regtime,jdbcType=VARCHAR},
       </if>
       <if test="lasttime != null" >
-        #{lasttime,jdbcType=VARCHAR},
-      </if>
+      #{lasttime,jdbcType=VARCHAR},
+    </if>
       <if test="area != null" >
         #{area,jdbcType=VARCHAR},
+      </if>
+      <if test="pricecount != null" >
+        #{pricecount,jdbcType=VARCHAR},
+      </if>
+      <if test="publishcount != null" >
+        #{publishcount,jdbcType=VARCHAR},
       </if>
     </trim>
   </insert>
@@ -135,6 +156,12 @@
       <if test="area != null" >
         area = #{area,jdbcType=VARCHAR},
       </if>
+      <if test="publishcount != null" >
+        publishcount = #{publishcount,jdbcType=VARCHAR},
+      </if>
+      <if test="pricecount != null" >
+        pricecount = #{pricecount,jdbcType=VARCHAR},
+      </if>
     </set>
     where id = #{id,jdbcType=VARCHAR}
   </update>
@@ -147,7 +174,9 @@
       usertype = #{usertype,jdbcType=VARCHAR},
       regtime = #{regtime,jdbcType=VARCHAR},
       lasttime = #{lasttime,jdbcType=VARCHAR},
-      area = #{area,jdbcType=VARCHAR}
+      area = #{area,jdbcType=VARCHAR},
+      pricecount = #{pricecount,jdbcType=VARCHAR},
+      publishcount = #{publishcount,jdbcType=VARCHAR}
     where id = #{id,jdbcType=VARCHAR}
   </update>
 </mapper>

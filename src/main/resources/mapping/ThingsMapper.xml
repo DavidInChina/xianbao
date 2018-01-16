@@ -23,10 +23,63 @@
     from t_things
     where id = #{id,jdbcType=VARCHAR}
   </select>
+
+  <select id="waitThingsCount" resultType="java.lang.Integer" >
+    SELECT
+    count(*)
+    from t_things
+    where thingsstatus = '0'
+  </select>
+
+  <select id="passThingsCount" resultType="java.lang.Integer">
+    SELECT
+    count(*)
+    from t_things
+    where thingsstatus = '2'
+    OR thingsstatus = '3'
+  </select>
+  <select id="deniedThingsCount" resultType="java.lang.Integer">
+    SELECT
+    count(*)
+    from t_things
+    where thingsstatus = '1'
+  </select>
+
   <select id="indexThings" resultMap="BaseResultMap" parameterType="java.lang.Integer">
     select
     <include refid="Base_Column_List" />
     from t_things ORDER BY uptime LIMIT #{maxSize}
+  </select>
+  <update id="passThings" parameterType="java.lang.String" >
+    update t_things
+    <set>
+    <if test="thingType != null" >
+      thingsstatus = #{thingType,jdbcType=VARCHAR},
+    </if>
+    </set>
+    where id = #{thingsId,jdbcType=VARCHAR}
+  </update>
+  <update id="denideThings" parameterType="java.lang.String" >
+    update t_things
+    <set>
+      <if test="thingType != null" >
+        thingsstatus = #{thingType,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where id = #{thingsId,jdbcType=VARCHAR}
+  </update>
+  <select id="allThings" resultMap="BaseResultMap" parameterType="java.lang.String">
+    select
+    <include refid="Base_Column_List" />
+    from t_things WHERE  thingsstatus = #{type,jdbcType=VARCHAR}
+    ORDER BY uptime
+  </select>
+  <select id="allThings2" resultMap="BaseResultMap" parameterType="java.lang.String">
+    select
+    <include refid="Base_Column_List" />
+    from t_things WHERE  thingsstatus = #{type1,jdbcType=VARCHAR} OR
+    thingsstatus = #{type2,jdbcType=VARCHAR}
+    ORDER BY uptime
   </select>
   <select id="countNewThing" resultType="java.lang.Integer"  >
     SELECT

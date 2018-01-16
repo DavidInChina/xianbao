@@ -15,12 +15,27 @@ public interface ThingsMapper {
 
     List<Things> indexThings(int maxSize);//首页指定条数据
 
+    List<Things> allThings(String type);//根据状态获取所有物品
+
+    List<Things> allThings2(@Param("type1")String type1,@Param("type2")String type2);//根据状态获取所有物品
 
     int insertSelective(Things record);
 
     Things selectByPrimaryKey(String id);
 
+
+    int passThings(@Param("thingsId") String  thingsId, @Param("thingType")String thingType );
+
+    int denideThings(@Param("thingsId") String  thingsId, @Param("thingType")String thingType);
+
     int updateByPrimaryKeySelective(Things record);
 
     int updateByPrimaryKey(Things record);
+
+
+    public int waitThingsCount();//待审核物品数
+
+    public int passThingsCount();//审核通过数量
+
+    public int deniedThingsCount();//拒绝数量
 }

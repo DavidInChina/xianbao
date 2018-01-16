@@ -19,6 +19,26 @@ public class User {
 
     private String area;
 
+    private String publishcount;
+
+    private String pricecount;
+
+    public String getPublishcount() {
+        return publishcount;
+    }
+
+    public void setPublishcount(String publishcount) {
+        this.publishcount = publishcount;
+    }
+
+    public String getPricecount() {
+        return pricecount;
+    }
+
+    public void setPricecount(String pricecount) {
+        this.pricecount = pricecount;
+    }
+
     public String getId() {
         return id;
     }

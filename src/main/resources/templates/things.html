@@ -18,6 +18,8 @@
             if (typeof(admininfo) == "undefined" || admininfo == null){//session不存在则登陆
                 //未登录
                 window.location.href="login.html";
+            }else{
+                $('#adminname1').html(admininfo.adminname);
             }
             /*]]>*/
         });
@@ -46,12 +48,12 @@
                 </a>
             </li>
 
-            <li class="dropdown li-border"><a href="#" class="dropdown-toggle mystyle-color" data-toggle="dropdown">605875855@qq.com<span class="caret"></span></a>
+            <li class="dropdown li-border"><a href="#" id="adminname1" class="dropdown-toggle mystyle-color"
+                                              data-toggle="dropdown"> <span class="caret"></span></a>
                 <ul class="dropdown-menu">
-                    <li><a href="login.html">退出</a></li>
+                    <li><a href="loginOut">退出</a></li>
                 </ul>
             </li>
-
         </ul>
     </div>
 </nav>
@@ -112,10 +114,12 @@
                             </div>
 					<div class="info-center-title">
 					    <span class="padding-large-right manage-title pull-left">
-                           <a class="active" href="#">待审核物品</a>
+                           <a class="active" href="things.html" th:text="'待审核物品('+${waitCount}+')'">[...]</a>
                         </span>
-						<span class="padding-large-right pull-left"><a href="#">审核通过(244)</a></span>
-						<span class="pull-left"><a href="#">审核拒绝(15)</a></span>
+						<span class="padding-large-right pull-left"><a href="thingsPassed.html"
+                                                                       th:text="'审核通过('+${passCount}+')'">[...]</a></span>
+						<span class="pull-left"><a href="thingsDenied.html"  th:text="'审核拒绝('+${deniedCount}+')'"
+                        >[...]</a></span>
 					</div>
                     <div class="clearfix"></div>
 					<div class="table-margin">
@@ -130,36 +134,26 @@
                          </tr>
                          </thead>
                          <tbody>
-                         <tr>
-                          <td>2</td>
-                          <td>2</td>
-                          <td><img th:src="@{/img/noavatar_middle.gif}" width="25" height="25" alt="图片" />
-                              <img th:src="@{/img/noavatar_middle.gif}" width="25" height="25" alt="图片" /></td>
-                             <td>2</td>
+                         <tr th:each="things : ${allThings}">
+                          <td th:text="${things.thingsname}">[...]</td>
+                          <td th:text="${things.thingsdes.length() &gt;
+                           20? #strings.substring(user.userhead,0,20):things.thingsdes}">[...]</td>
+                             <td>
+                                 <div  class="pull-left" th:each="img : ${things.thingsimgs.split(',')}">
+                                 <img style="margin-left: 2px;" th:src="${(img == null
+                              || #strings.isEmpty(img)) ?
+                               '/img/noavatar_middle.gif' : img}" width="25" height="25" alt="图片" />
+                             </div>
+                             </td>
+                             <td th:text="${things.uptime}">[...]</td>
                              <td> <div class="btn-group" role="group">
                                  <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                                      <span class="glyphicon glyphicon-edit"></span> 审核
                                      <span class="caret"></span>
                                  </button>
                                  <ul class="dropdown-menu">
-                                     <li><a href="#">通过</a></li>
-                                     <li><a href="#">不通过</a></li>
-                                 </ul>
-                             </div></td>
-                         </tr>
-                         <tr>
-                          <td>2</td>
-                          <td>2</td>
-                          <td><img src="img/noavatar_middle.gif" width="25" height="25" alt="图片" /></td>
-                             <td>2</td>
-                             <td> <div class="btn-group" role="group">
-                                 <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                     <span class="glyphicon glyphicon-edit"></span> 审核
-                                     <span class="caret"></span>
-                                 </button>
-                                 <ul class="dropdown-menu">
-                                     <li><a href="#">通过</a></li>
-                                     <li><a href="#">不通过</a></li>
+                                     <li><a th:href="@{'thingsPass/?passThingsId='+${things.id}}">通过</a></li>
+                                     <li><a th:href="@{'thingsDenide/?denideThingsId='+${things.id}}">不通过</a></li>
                                  </ul>
                              </div></td>
                          </tr>

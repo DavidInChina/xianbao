@@ -18,6 +18,8 @@
             if (typeof(admininfo) == "undefined" || admininfo == null){//session不存在则登陆
                 //未登录
                 window.location.href="login.html";
+            }else{
+                $('#adminname1').html(admininfo.adminname);
             }
             /*]]>*/
         });
@@ -46,9 +48,10 @@
                 </a>
             </li>
 
-            <li class="dropdown li-border"><a href="#" class="dropdown-toggle mystyle-color" data-toggle="dropdown">605875855@qq.com<span class="caret"></span></a>
+            <li class="dropdown li-border"><a href="#" id="adminname1" class="dropdown-toggle mystyle-color"
+                                              data-toggle="dropdown"> <span class="caret"></span></a>
                 <ul class="dropdown-menu">
-                    <li><a href="login.html">退出</a></li>
+                    <li><a href="loginOut">退出</a></li>
                 </ul>
             </li>
 
@@ -126,22 +129,18 @@
                              </tr>
                              </thead>
                              <tbody>
-                             <tr>
-                              <td><img src="img/noavatar_middle.gif" width="25" height="25" alt="图片" /> 2</td>
-                              <td>2</td>
-                              <td>2</td>
+                             <tr  th:each="user : ${allUsers}">
+                              <td><img  th:src="${(user.userhead == null
+                              || #strings.isEmpty(user.userhead)) ?
+                               '/img/noavatar_middle.gif' : user.userhead}"
+                                        width="25" height="25" alt="图片" class="img-circle"/>
+                                  <span th:text="${user.username}"> [...]</span></td>
+                              <td th:text="${user.publishcount}">[...]</td>
+                              <td th:text="${user.pricecount}">[...]</td>
                                  <td>活跃</td>
-                              <td>2018-01-12</td>
-                              <td>2018-01-12</td>
+                              <td  th:text="${user.lasttime}">[...]</td>
+                              <td  th:text="${user.regtime}">[...]</td>
 
-                             </tr>
-                             <tr>
-                              <td><img src="img/noavatar_middle.gif" width="25" height="25" alt="图片" /> 2</td>
-                              <td>2</td>
-                              <td>2</td>
-                                 <td>正常</td>
-                              <td>2018-01-12</td>
-                              <td>2018-01-12</td>
                              </tr>
                              </tbody>
 

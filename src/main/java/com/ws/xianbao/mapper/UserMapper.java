@@ -14,9 +14,12 @@ public interface UserMapper {
 
     List<User> indexUsers(int maxSize);//首页指定条数据
 
+    List<User> allUsers();//全部用户数据，暂不分页
+
     int insertSelective(User record);
 
     User selectByPrimaryKey(String id);
+
 
     int updateByPrimaryKeySelective(User record);
 

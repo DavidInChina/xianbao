@@ -44,12 +44,51 @@ public class AdminServiceImpl implements AdminService {
     }
 
     @Override
+    public int waitThingsCount() {
+        return thingsMapper.waitThingsCount();
+    }
+
+    @Override
+    public int passThingsCount() {
+        return thingsMapper.passThingsCount();
+    }
+
+    @Override
+    public int deniedThingsCount() {
+        return thingsMapper.deniedThingsCount();
+    }
+
+    @Override
     public List<Things> indexThings() {
         return thingsMapper.indexThings(6);
     }
 
     @Override
+    public List<Things> allThings(String type) {
+        if (Integer.parseInt(type)<2)
+        return thingsMapper.allThings(type);
+        else{
+            return thingsMapper.allThings2("2", "3");//通过有两种状态
+        }
+    }
+
+    @Override
     public List<User> indexUsers() {
         return userMapper.indexUsers(6);
+    }
+
+    @Override
+    public int passThings(String thingsId) {
+        return thingsMapper.passThings(thingsId,"2");
+    }
+
+    @Override
+    public int denideThings(String thingsId) {
+        return thingsMapper.denideThings(thingsId,"1");
+    }
+
+    @Override
+    public List<User> allUsers() {
+        return userMapper.allUsers();
     }
 }

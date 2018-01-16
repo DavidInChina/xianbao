@@ -1,19 +1,15 @@
-<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+﻿<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns:th="http://www.thymeleaf.org">
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1,maximum-scale=1, user-scalable=no"/>
-<title>通知管理</title>
+<title>物品审核</title>
     <link th:href="@{/bootstrap-3.3.5-dist/css/bootstrap.min.css}" rel="stylesheet"/>
     <link th:href="@{/css/style.css}" rel="stylesheet"/>
     <link th:href="@{/css/dermadefault.css}" rel="stylesheet"/>
     <link th:href="@{/css/templatecss.css}" rel="stylesheet"/>
     <script th:src="@{http://www.jq22.com/jquery/jquery-1.10.2.js}"></script>
     <script th:src="@{/bootstrap-3.3.5-dist/js/bootstrap.min.js}"></script>
-
-    <link th:href="@{/ui-layout-0.0.0/ui-layout.css}" rel="stylesheet"/>
-    <script th:src="@{/ui-layout-0.0.0/ui-layout.js}"></script>
-    <script th:src="@{/script/angular.min.js}"></script>
     <script th:src="@{/script/jquery.session.js}"></script>
     <script th:inline="javascript">
         $(document).ready(function () {
@@ -28,8 +24,6 @@
             /*]]>*/
         });
     </script>
-
-
 </head>
 
 <body>
@@ -60,7 +54,6 @@
                     <li><a href="loginOut">退出</a></li>
                 </ul>
             </li>
-
         </ul>
     </div>
 </nav>
@@ -74,7 +67,7 @@
        </span><span class="sublist-title">平台管理</span>
                 </div>
                 <ul class="navContent" style="display:block">
-                    <li >
+                    <li>
                         <div class="showtitle" style="width:100px;"><img src="img/leftimg.png" />后台主页</div>
                         <a href="index.html"><span class="sublist-icon glyphicon glyphicon-home">
             </span><span class="sub-title">后台主页</span></a> </li>
@@ -83,13 +76,13 @@
                         <a href="users.html"><span class="sublist-icon glyphicon glyphicon-credit-card">
 
             </span><span class="sub-title">用户管理</span></a> </li>
-                    <li>
+                    <li class="active">
                         <div class="showtitle" style="width:100px;"><img src="img/leftimg.png" />物品审核</div>
                         <a href="things.html"><span class="sublist-icon glyphicon glyphicon-edit">
 
             </span><span class="sub-title">物品审核</span></a> </li>
 
-                    <li  class="active">
+                    <li>
                         <div class="showtitle" style="width:100px;"><img src="img/leftimg.png" />通知管理</div>
                         <a href="newslist.html"><span class="sublist-icon glyphicon glyphicon-bullhorn">
 
@@ -112,133 +105,88 @@
         </div>
     </div>
   <div class="right-product right-full">
-  <section id="layout" ng-app="doc.ui-layout">
-    <div class="layout-mock">
-      <ui-layout options="{ flow : 'column' }">
-
-        <div class="center-back right-back">
-        <div class="container-fluid">
-          <div class="info-center">
-                    <div class="page-header">
+     <div class="container-fluid">
+				<div class="info-center">
+					<div class="page-header">
                       <div class="pull-left">
-						<h4>通知管理</h4>
+						<h4>物品审核</h4>
 					</div>
-
-                    </div>
-				    <div class="search-box row">
-                       <div class="col-md-8">
-                        <div class="form-group">
-                          <span class="pull-left form-span">电子邮件:</span>
-                           <input type="email" class="form-control" placeholder="请输入您的电子邮件"/>
-                           </div>
-                            <div class="form-group">
-                              <input type="email" class="form-control" placeholder="请输件"/>
-                           </div>
-                           <div class="form-group">
-                              <span class="pull-left form-span">状态:</span>
-                              <select class="form-control">
-                                <option>1</option>
-                                <option>2</option>
-                                <option>3</option>
-                                <option>4</option>
-                              </select>
-                           </div>
-                        <div class="form-group">
-                          <input type="email" class="form-control" placeholder="请输件"/>
-                       </div>
-                       
-                       
-                       <div class="form-group btn-search">
-                            <button class="btn btn-default" ><span class="glyphicon glyphicon-search"></span> 搜索</button>
-                        </div>
-                        </div>
-                        <div class="col-md-4">
-                         <div class="btn-group pull-right" role="group" aria-label="...">
-                          <button type="button" class="btn btn-default"><span class="glyphicon glyphicon-plus"></span> 新增</button>
-                           <div class="btn-group" role="group">
-                            <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                              <span class="glyphicon glyphicon-edit"></span> 审核
-                              <span class="caret"></span>
-                            </button>
-                            <ul class="dropdown-menu">
-                              <li><a href="#">通过</a></li>
-                              <li><a href="#">不通过</a></li>
-                            </ul>
-                          </div>
-                          <button type="button" class="btn btn-default"><span class="glyphicon glyphicon-pencil"></span> 编辑</button>
-                         <button type="button" class="btn btn-default"><span class="glyphicon glyphicon-trash"></span> 删除</button>
-                        </div>
-                        </div>
-                        
-                    </div>
+                            </div>
+					<div class="info-center-title">
+					    <span class="padding-large-right manage-title pull-left">
+                           <a  href="things.html" th:text="'待审核物品('+${waitCount}+')'">[...]</a>
+                        </span>
+						<span class="padding-large-right pull-left"><a  class="active" href="thingsPassed.html"
+                                                                       th:text="'审核通过('+${passCount}+')'">[...]</a></span>
+						<span class="pull-left"><a href="thingsDenied.html"  th:text="'审核拒绝('+${deniedCount}+')'"
+                        >[...]</a></span>
+					</div>
                     <div class="clearfix"></div>
-                      <div class="table-margin">
+					<div class="table-margin">
                       <table class="table table-bordered table-header">
                       <thead>
                          <tr>
-                           <td><input type="checkbox" /></td>
-                           <td class="w70">标题内容</td>
-                           <td class="w15">提交时间</td>
-                           <td class="w15">类型</td>
+                           <td class="w20">物品名称</td>
+                           <td class="w30">物品描述</td>
+                           <td class="w30">物品图片</td>
+                             <td class="w10">提交时间</td>
+                             <td class="w10">物品状态</td>
                          </tr>
                          </thead>
                          <tbody>
-                         <tr>
-                          <td><input type="checkbox" /></td>
-                          <td>2</td>
-                          <td>2</td>
-                          <td>2</td>
-                         </tr>
-                         <tr>
-                          <td><input type="checkbox" /></td>
-                          <td>2</td>
-                          <td>2</td>
-                          <td>2</td>
+                         <tr th:each="things : ${allThings}">
+                          <td th:text="${things.thingsname}">[...]</td>
+                          <td th:text="${things.thingsdes.length() &gt;
+                           20? #strings.substring(user.userhead,0,20):things.thingsdes}">[...]</td>
+                             <td>
+                                 <div  class="pull-left" th:each="img : ${things.thingsimgs.split(',')}">
+                                 <img style="margin-left: 2px;" th:src="${(img == null
+                              || #strings.isEmpty(img)) ?
+                               '/img/noavatar_middle.gif' : img}" width="25" height="25" alt="图片" />
+                             </div>
+                             </td>
+                             <td th:text="${things.uptime}">[...]</td>
+                             <td th:text="${things.thingsstatus == '2'?'待竞价':'已完成'}">[...]</td>
                          </tr>
                          </tbody>
-                         <tfoot>
+                          <tfoot>
                           <tr>
-                            <td colspan="4">
-                              <div class="pull-right">
-                                  <nav>
-                                      <ul class="pagination">
-                                        <li>
-                                          <a href="#" aria-label="Previous">
-                                            <span aria-hidden="true">&laquo;</span>
-                                          </a>
-                                        </li>
-                                        <li><a href="#">1</a></li>
-                                        <li><a href="#">2</a></li>
-                                        <li><a href="#">3</a></li>
-                                        <li><a href="#">4</a></li>
-                                        <li><a href="#">5</a></li>
-                                        <li>
-                                          <a href="#" aria-label="Next">
-                                            <span aria-hidden="true">&raquo;</span>
-                                          </a>
-                                        </li>
-                                      </ul>
-                                    </nav>
-                              </div>
-                            </td>
+                              <td colspan="5">
+                                  <div class="pull-right">
+                                      <nav>
+                                          <ul class="pagination">
+                                              <li>
+                                                  <a href="#" aria-label="Previous">
+                                                      <span aria-hidden="true">&laquo;</span>
+                                                  </a>
+                                              </li>
+                                              <li><a href="#">1</a></li>
+                                              <li><a href="#">2</a></li>
+                                              <li><a href="#">3</a></li>
+                                              <li><a href="#">4</a></li>
+                                              <li><a href="#">5</a></li>
+                                              <li>
+                                                  <a href="#" aria-label="Next">
+                                                      <span aria-hidden="true">&raquo;</span>
+                                                  </a>
+                                              </li>
+                                          </ul>
+                                      </nav>
+                                  </div>
+                              </td>
                           </tr>
-                         </tfoot>
+                          </tfoot>
                       </table>
                     </div>
-                    </div>
-          </div>
-        </div>
-      </ui-layout>
-   </div>
-  </section>   
- </div>
+				</div>
+				<div class="show-page hidden">
+					<ul>
+					</ul>
+				</div>
+		</div>
+  </div>
 </div>
-
-
 <script type="text/javascript">
-/*Angular-UI-layout*/
-angular.module('doc.ui-layout', ['ui.layout']);
-
 $(function(){
 
 /*左侧导航栏显示隐藏功能*/

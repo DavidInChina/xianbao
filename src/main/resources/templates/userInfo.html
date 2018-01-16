@@ -18,6 +18,11 @@
             if (typeof(admininfo) == "undefined" || admininfo == null){//session不存在则登陆
                 //未登录
                 window.location.href="login.html";
+            }else{
+                $('#adminname1').html(admininfo.adminname);
+                $('#adminHead').attr("src",admininfo.head);
+                $('#adminAccount').html(admininfo.account);
+                $('#lastTime').html(admininfo.lasttime);
             }
             /*]]>*/
         });
@@ -46,9 +51,10 @@
                 </a>
             </li>
 
-            <li class="dropdown li-border"><a href="#" class="dropdown-toggle mystyle-color" data-toggle="dropdown">605875855@qq.com<span class="caret"></span></a>
+            <li class="dropdown li-border"><a href="#" id="adminname1" class="dropdown-toggle mystyle-color"
+                                              data-toggle="dropdown"> <span class="caret"></span></a>
                 <ul class="dropdown-menu">
-                    <li><a href="login.html">退出</a></li>
+                    <li><a href="loginOut">退出</a></li>
                 </ul>
             </li>
 
@@ -113,19 +119,19 @@
 					<dl class="account-basic clearfix">
 						<dt class="pull-left">
 						<p class="account-head">
-							<img src="http://diy.qqjay.com/u2/2013/0225/ca579b49f35f2c00dacf22a62ff534ce.jpg"/>
+                            <img th:src="@{/img/noavatar_middle.gif}" id="adminHead" />
 						</p>
 						</dt>
 						<dd class="pull-left margin-large-left margin-small-top">
 						<p class="text-small">
-							<span class="show pull-left base-name">管理员账号</span>:<span class="margin-left">admin </span>
+							<span class="show pull-left base-name">管理员账号</span>:<span class="margin-left" id="adminAccount">admin </span>
 						</p>
 						<p class="text-small">
 							<span class="show pull-left base-name">账号状态</span>:
 							<span class="margin-left">正常</span>
 						</p>
 						<p class="text-small">
-							<span class="show pull-left base-name">上次登录</span>:<span class="margin-left">2015-01-12 11:50:22</span>
+							<span class="show pull-left base-name">上次登录</span>:<span class="margin-left" id="lastTime">2015-01-12 11:50:22</span>
 						</p>
 						</dd>
 					</dl>

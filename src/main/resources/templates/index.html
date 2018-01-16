@@ -17,11 +17,11 @@
             if (typeof(admininfo) == "undefined" || admininfo == null) {
                 //未登录
                 window.location.href = "login.html";
-                /*]]>*/
             }else{
                 $('#adminname1').html(admininfo.adminname);
                 $('#adminname2').html(admininfo.adminname+"你好，");
             }
+            /*]]>*/
         });
     </script>
 </head>
@@ -95,9 +95,8 @@
         </span><span class="sublist-title">账号管理</span></div>
         <ul class="navContent" style="display:block">
           <li>
-            <div class="showtitle" style="width:100px;"><img src="img/leftimg.png" />个人账号</div>
+            <div class="showtitle" style="width:100px;">个人账号</div>
             <a href="userInfo.html"><span class="sublist-icon glyphicon glyphicon-user">
-
             </span><span class="sub-title">个人账号</span></a></li>
         </ul>
       </div>
@@ -136,7 +135,7 @@
                        <div class="title-content">
                            <p>新注册用户</p>
                            <h3 class="number" th:text="${userCount}">[...]</h3>
-                           <button class="btn btn-default">待我管理<span style="color:red;">22</span></button>
+                           <a href="users.html"> <button class="btn btn-default">待我管理<span style="color:red;">22</span></button></a>
                        </div>
                        </div>
                        <div class="clearfix"></div>
@@ -150,8 +149,8 @@
                        <div class="w70 right-title pull-right">
                        <div class="title-content">
                            <p>新添加物品</p>
-                           <h3 class="number">123</h3>
-                           <button class="btn btn-default">待我审核<span style="color:red;">18</span></button>
+                           <h3 class="number" th:text="${thingsCount}">[...]</h3>
+                           <a href="things.html"><button class="btn btn-default">待我审核<span style="color:red;">18</span></button></a>
                        </div>
                        </div>
                        <div class="clearfix"></div>
@@ -166,7 +165,7 @@
                        <div class="title-content">
                            <p>最新通知</p>
                            <h3 class="number">40</h3>
-                           <button class="btn btn-default">待我处理<span style="color:red;">21</span></button>
+                           <a href="newslist.html"><button class="btn btn-default">待我处理<span style="color:red;">21</span></button></a>
                        </div>
                        </div>
                        <div class="clearfix"></div>
@@ -181,67 +180,29 @@
                       <div class="panel-heading">
                        物品审核<div class="caret"></div>
                        <a href="#" class="pull-right"><span class="glyphicon glyphicon-refresh"></span></a>
-                      </div>     
-                      <div class="panel-body">
-                           <div class="w15 pull-left">
-                             <img src="img/noavatar_middle.gif" width="25" height="25" alt="图片" class="img-circle"/>
-                             安妮
-                           </div>
-                           <div class="w55 pull-left">系统需要升级</div>
-                           <div class="w20 pull-left text-center">2016年8月23日</div>
-                          <div class="w10 pull-left text-center"><span class="text-green-main">处理中</span></div>
                       </div>
-                      
-                      <div class="panel-body">
-                           <div class="w15 pull-left">
-                             <img src="img/noavatar_middle.gif" width="25" height="25" alt="图片" class="img-circle"/>
-                             安妮
+                       <div class="panel-body" th:each="things : ${indexThings}">
+                           <div class="pull-left" th:each="img : ${things.thingsimgs.split(',')}">
+                               <img style="margin-left: 2px;" th:src="${(img == null
+                              || #strings.isEmpty(img)) ?
+                               '/img/noavatar_middle.gif' : img}" width="25" height="25" alt="图片" />
                            </div>
-                           <div class="w55 pull-left">系统需要升级</div>
-                           <div class="w20 pull-left text-center">2016年8月23日</div>
-                          <div class="w10 pull-left text-center"><span class="text-green-main">处理中</span></div>
+                           <div class="w15 pull-left text-left" style="margin-left: 10px"
+                                th:text="${things.thingsname}">[...]</div>
+                           <div class="w40 pull-left text-left" th:text="${things.thingsdes.length() &gt;
+                           20? #strings.substring(user.userhead,0,20):things.thingsdes}">[...]</div>
+                           <div class="w20 pull-left text-center" th:text="${things.uptime}">12345</div>
+                          <div class="w10 pull-left text-center" th:switch="${things.thingsstatus}">
+                                  <span class="text-yellow-main" th:case="0">待审核</span>
+                              <span class="text-red-main" th:case="1">审核未通过</span>
+                              <span class="text-green-main" th:case="2">待竞价</span>
+                              <span class="text-blue-main" th:case="3">已完成</span>
+                          </div>
                       </div>
-                      
-                      <div class="panel-body">
-                           <div class="w15 pull-left">
-                             <img src="img/noavatar_middle.gif" width="25" height="25" alt="图片" class="img-circle"/>
-                             安妮
-                           </div>
-                           <div class="w55 pull-left">系统需要升级</div>
-                           <div class="w20 pull-left text-center">2016年8月23日</div>
-                           <div class="w10 pull-left text-center"><span class="text-gray">已关闭</span></div>
-                      </div>
-                      
-                      <div class="panel-body">
-                           <div class="w15 pull-left">
-                             <img src="img/noavatar_middle.gif" width="25" height="25" alt="图片" class="img-circle"/>
-                             安妮
-                           </div>
-                           <div class="w55 pull-left">系统需要升级</div>
-                           <div class="w20 pull-left text-center">2016年8月23日</div>
-                           <div class="w10 pull-left text-center"><span>处理中</span></div>
-                      </div>
-                      <div class="panel-body">
-                           <div class="w15 pull-left">
-                             <img src="img/noavatar_middle.gif" width="25" height="25" alt="图片" class="img-circle"/>
-                             安妮
-                           </div>
-                           <div class="w55 pull-left">系统需要升级</div>
-                           <div class="w20 pull-left text-center">2016年8月23日</div>
-                           <div class="w10 pull-left text-center"><span>处理中</span></div>
-                      </div>
-                      <div class="panel-body">
-                           <div class="w15 pull-left">
-                             <img src="img/noavatar_middle.gif" width="25" height="25" alt="图片" class="img-circle"/>
-                             安妮
-                           </div>
-                           <div class="w55 pull-left">系统需要升级</div>
-                           <div class="w20 pull-left text-center">2016年8月23日</div>
-                           <div class="w10 pull-left text-center"><span>处理中</span></div>
-                      </div>
+
                       
                       <div class="panel-body text-center">
-                          <a href="#" style="color:#5297d6;">查看全部</a>
+                          <a href="things.html" style="color:#5297d6;">查看全部</a>
                       </div>
                       
                     </div>
@@ -257,15 +218,15 @@
                           <div class="w10 pull-left">
                               <img  th:src="${(user.userhead == null
                               || #strings.isEmpty(user.userhead)) ?
-                               'img/noavatar_middle.gif' : user.userhead}" width="25" height="25" alt="图片" class="img-circle"/>
+                               '/img/noavatar_middle.gif' : user.userhead}" width="25" height="25" alt="图片" class="img-circle"/>
                           </div>
-                          <div class="w30 pull-left text-right" th:text="${user.username}">[...]</div>
-                          <div class="w40 pull-left text-right" th:text="${user.regtime}">[...]</div>
+                          <div class="w30 pull-left text-left" th:text="${user.username}">[...]</div>
+                          <div class="w40 pull-left text-center" th:text="${user.regtime}">12345</div>
                           <div class="w20 pull-left text-center">
                               <div class="text-green-main" th:text="${user.usertype}">[...]</div></div>
                       </div>
                          <div class="panel-body text-center">
-                             <a href="#" style="color:#5297d6;">查看全部</a>
+                             <a href="users.html" style="color:#5297d6;">查看全部</a>
                          </div>
                     </div>
                     
