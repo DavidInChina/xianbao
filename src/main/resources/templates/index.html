@@ -1,0 +1,343 @@
+﻿<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1,maximum-scale=1, user-scalable=no"/>
+<title>后台管理主页</title>
+    <link th:href="@{/bootstrap-3.3.5-dist/css/bootstrap.min.css}" rel="stylesheet"/>
+    <link th:href="@{/css/style.css}" rel="stylesheet"/>
+    <link th:href="@{/css/dermadefault.css}" rel="stylesheet"/>
+    <link th:href="@{/css/templatecss.css}" rel="stylesheet"/>
+    <script th:src="@{/script/jquery.min.js}"></script>
+    <script th:src="@{/bootstrap-3.3.5-dist/js/bootstrap.min.js}"></script>
+    <script th:inline="javascript">
+        $(document).ready(function () {
+            /*<![CDATA[*/
+            var admininfo =  [[${session.user_info_session}]];
+            if (typeof(admininfo) == "undefined" || admininfo == null) {
+                //未登录
+                window.location.href = "login.html";
+                /*]]>*/
+            }else{
+                $('#adminname1').html(admininfo.adminname);
+                $('#adminname2').html(admininfo.adminname+"你好，");
+            }
+        });
+    </script>
+</head>
+
+<body>
+<nav class="nav navbar-default navbar-mystyle navbar-fixed-top">
+  <div class="navbar-header">
+    <button class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse"> 
+     <span class="icon-bar"></span> 
+     <span class="icon-bar"></span> 
+     <span class="icon-bar"></span> 
+    </button>
+    <a class="navbar-brand mystyle-brand"><span class="glyphicon glyphicon-home"></span></a> </div>
+  <div class="collapse navbar-collapse">
+    <ul class="nav navbar-nav">
+      <li class="li-border"><a class="mystyle-color" href="#">闲宝后台管理系统</a></li>
+    </ul>
+    
+    <ul class="nav navbar-nav pull-right">
+       <li class="li-border">
+          <a href="#" class="mystyle-color">
+            <span class="glyphicon glyphicon-bell"></span>
+            <span class="topbar-num">0</span>
+          </a>
+      </li>
+      <li class="dropdown li-border"><a href="#" id="adminname1" class="dropdown-toggle mystyle-color"
+                                        data-toggle="dropdown"> <span class="caret"></span></a>
+        <ul class="dropdown-menu">
+          <li><a href="loginOut">退出</a></li>
+        </ul>
+      </li>
+    </ul>
+  </div>
+</nav>
+<div class="down-main">
+  <div class="left-main left-full">
+    <div class="sidebar-fold"><span class="glyphicon glyphicon-menu-hamburger"></span></div>
+    <div class="subNavBox">
+      <div class="sBox">
+       <div class="subNav sublist-down"><span class="title-icon glyphicon glyphicon-chevron-down">
+
+       </span><span class="sublist-title">平台管理</span>
+        </div>
+        <ul class="navContent" style="display:block">
+          <li class="active">
+            <div class="showtitle" style="width:100px;"><img src="img/leftimg.png" />后台主页</div>
+            <a href="index.html"><span class="sublist-icon glyphicon glyphicon-home">
+            </span><span class="sub-title">后台主页</span></a> </li>
+            <li>
+                <div class="showtitle" style="width:100px;"><img src="img/leftimg.png" />用户管理</div>
+                <a href="users.html"><span class="sublist-icon glyphicon glyphicon-credit-card">
+
+            </span><span class="sub-title">用户管理</span></a> </li>
+          <li>
+            <div class="showtitle" style="width:100px;"><img src="img/leftimg.png" />物品审核</div>
+            <a href="things.html"><span class="sublist-icon glyphicon glyphicon-edit">
+
+            </span><span class="sub-title">物品审核</span></a> </li>
+
+          <li>
+            <div class="showtitle" style="width:100px;"><img src="img/leftimg.png" />通知管理</div>
+            <a href="newslist.html"><span class="sublist-icon glyphicon glyphicon-bullhorn">
+
+            </span><span class="sub-title">通知管理</span></a></li>
+
+        </ul>
+      </div>
+      <div class="sBox">
+        <div class="subNav sublist-up"><span class="title-icon glyphicon glyphicon-chevron-up">
+
+        </span><span class="sublist-title">账号管理</span></div>
+        <ul class="navContent" style="display:block">
+          <li>
+            <div class="showtitle" style="width:100px;"><img src="img/leftimg.png" />个人账号</div>
+            <a href="userInfo.html"><span class="sublist-icon glyphicon glyphicon-user">
+
+            </span><span class="sub-title">个人账号</span></a></li>
+        </ul>
+      </div>
+    </div>
+  </div>
+  <div class="right-product my-index right-full">
+     <div class="container-fluid">
+	   <div class="info-center">
+       
+       <!--title-->
+            <div class="info-title">
+              <div class="pull-left">
+                <h4><strong id="adminname2"></strong></h4>
+                <p>欢迎使用闲宝后台管理系统！</p>
+              </div>
+              <div class="time-title pull-right">
+                  <div class="year-month pull-left">
+                    <p id="week"></p>
+                    <p id="date"></p>
+                  </div>
+                  <div class="hour-minute pull-right">
+                     <strong id="time"></strong>
+                  </div>
+              </div>
+              <div class="clearfix"></div>
+            </div>
+           <!--content-list-->
+            <div class="content-list">
+               <div class="row">
+                 <div class="col-md-4">
+                    <div class="content">
+                       <div class="w30 left-icon pull-left">
+                          <span class="glyphicon glyphicon-user blue"></span>
+                       </div>
+                       <div class="w70 right-title pull-right">
+                       <div class="title-content">
+                           <p>新注册用户</p>
+                           <h3 class="number" th:text="${userCount}">[...]</h3>
+                           <button class="btn btn-default">待我管理<span style="color:red;">22</span></button>
+                       </div>
+                       </div>
+                       <div class="clearfix"></div>
+                    </div>
+                 </div>
+                  <div class="col-md-4">
+                    <div class="content">
+                       <div class="w30 left-icon pull-left">
+                          <span class="glyphicon glyphicon-edit violet"></span>
+                       </div>
+                       <div class="w70 right-title pull-right">
+                       <div class="title-content">
+                           <p>新添加物品</p>
+                           <h3 class="number">123</h3>
+                           <button class="btn btn-default">待我审核<span style="color:red;">18</span></button>
+                       </div>
+                       </div>
+                       <div class="clearfix"></div>
+                    </div>
+                 </div>
+                  <div class="col-md-4">
+                    <div class="content">
+                       <div class="w30 left-icon pull-left">
+                          <span class="glyphicon glyphicon-bullhorn orange"></span>
+                       </div>
+                       <div class="w70 right-title pull-right">
+                       <div class="title-content">
+                           <p>最新通知</p>
+                           <h3 class="number">40</h3>
+                           <button class="btn btn-default">待我处理<span style="color:red;">21</span></button>
+                       </div>
+                       </div>
+                       <div class="clearfix"></div>
+                    </div>
+                 </div>
+
+               </div>
+               <!--信息列表-->
+               <div class="row newslist" style="margin-top:20px;">
+                 <div class="col-md-8">
+                   <div class="panel panel-default">
+                      <div class="panel-heading">
+                       物品审核<div class="caret"></div>
+                       <a href="#" class="pull-right"><span class="glyphicon glyphicon-refresh"></span></a>
+                      </div>     
+                      <div class="panel-body">
+                           <div class="w15 pull-left">
+                             <img src="img/noavatar_middle.gif" width="25" height="25" alt="图片" class="img-circle"/>
+                             安妮
+                           </div>
+                           <div class="w55 pull-left">系统需要升级</div>
+                           <div class="w20 pull-left text-center">2016年8月23日</div>
+                          <div class="w10 pull-left text-center"><span class="text-green-main">处理中</span></div>
+                      </div>
+                      
+                      <div class="panel-body">
+                           <div class="w15 pull-left">
+                             <img src="img/noavatar_middle.gif" width="25" height="25" alt="图片" class="img-circle"/>
+                             安妮
+                           </div>
+                           <div class="w55 pull-left">系统需要升级</div>
+                           <div class="w20 pull-left text-center">2016年8月23日</div>
+                          <div class="w10 pull-left text-center"><span class="text-green-main">处理中</span></div>
+                      </div>
+                      
+                      <div class="panel-body">
+                           <div class="w15 pull-left">
+                             <img src="img/noavatar_middle.gif" width="25" height="25" alt="图片" class="img-circle"/>
+                             安妮
+                           </div>
+                           <div class="w55 pull-left">系统需要升级</div>
+                           <div class="w20 pull-left text-center">2016年8月23日</div>
+                           <div class="w10 pull-left text-center"><span class="text-gray">已关闭</span></div>
+                      </div>
+                      
+                      <div class="panel-body">
+                           <div class="w15 pull-left">
+                             <img src="img/noavatar_middle.gif" width="25" height="25" alt="图片" class="img-circle"/>
+                             安妮
+                           </div>
+                           <div class="w55 pull-left">系统需要升级</div>
+                           <div class="w20 pull-left text-center">2016年8月23日</div>
+                           <div class="w10 pull-left text-center"><span>处理中</span></div>
+                      </div>
+                      <div class="panel-body">
+                           <div class="w15 pull-left">
+                             <img src="img/noavatar_middle.gif" width="25" height="25" alt="图片" class="img-circle"/>
+                             安妮
+                           </div>
+                           <div class="w55 pull-left">系统需要升级</div>
+                           <div class="w20 pull-left text-center">2016年8月23日</div>
+                           <div class="w10 pull-left text-center"><span>处理中</span></div>
+                      </div>
+                      <div class="panel-body">
+                           <div class="w15 pull-left">
+                             <img src="img/noavatar_middle.gif" width="25" height="25" alt="图片" class="img-circle"/>
+                             安妮
+                           </div>
+                           <div class="w55 pull-left">系统需要升级</div>
+                           <div class="w20 pull-left text-center">2016年8月23日</div>
+                           <div class="w10 pull-left text-center"><span>处理中</span></div>
+                      </div>
+                      
+                      <div class="panel-body text-center">
+                          <a href="#" style="color:#5297d6;">查看全部</a>
+                      </div>
+                      
+                    </div>
+                 </div>
+                 
+                 <div class="col-md-4">
+                     <div class="panel panel-default">
+                      <div class="panel-heading">
+                       用户管理
+                       <a href="#" class="pull-right"><span class="glyphicon glyphicon-refresh"></span></a>
+                      </div>
+                      <div class="panel-body" th:each="user : ${indexUsers}">
+                          <div class="w10 pull-left">
+                              <img  th:src="${(user.userhead == null
+                              || #strings.isEmpty(user.userhead)) ?
+                               'img/noavatar_middle.gif' : user.userhead}" width="25" height="25" alt="图片" class="img-circle"/>
+                          </div>
+                          <div class="w30 pull-left text-right" th:text="${user.username}">[...]</div>
+                          <div class="w40 pull-left text-right" th:text="${user.regtime}">[...]</div>
+                          <div class="w20 pull-left text-center">
+                              <div class="text-green-main" th:text="${user.usertype}">[...]</div></div>
+                      </div>
+                         <div class="panel-body text-center">
+                             <a href="#" style="color:#5297d6;">查看全部</a>
+                         </div>
+                    </div>
+                    
+                 </div>
+               </div>
+            </div>
+            
+       </div>			
+	 </div>
+  </div>
+</div>
+<script type="text/javascript">
+$(function(){
+    function showAuto(){
+        var mydate = new Date();
+        $('#date').html(mydate.toLocaleDateString());
+        var Week = ['日','一','二','三','四','五','六'];
+        $('#week').html('星期' + Week[mydate.getDay()]);
+        $('#time').html(mydate.getHours()+":"+mydate.getMinutes());
+    }
+    showAuto();
+    setInterval(showAuto, 1000);
+    /*左侧导航栏显示隐藏功能*/
+$(".subNav").click(function(){				
+			/*显示*/
+			if($(this).find("span:first-child").attr('class')=="title-icon glyphicon glyphicon-chevron-down")
+			{
+				$(this).find("span:first-child").removeClass("glyphicon-chevron-down");
+			    $(this).find("span:first-child").addClass("glyphicon-chevron-up");
+			    $(this).removeClass("sublist-down");
+				$(this).addClass("sublist-up");
+			}
+			/*隐藏*/
+			else
+			{
+				$(this).find("span:first-child").removeClass("glyphicon-chevron-up");
+				$(this).find("span:first-child").addClass("glyphicon-chevron-down");
+				$(this).removeClass("sublist-up");
+				$(this).addClass("sublist-down");
+			}	
+		// 修改数字控制速度， slideUp(500)控制卷起速度
+	    $(this).next(".navContent").slideToggle(300).siblings(".navContent").slideUp(300);
+	})
+/*左侧导航栏缩进功能*/
+$(".left-main .sidebar-fold").click(function(){
+
+	if($(this).parent().attr('class')=="left-main left-full")
+	{
+		$(this).parent().removeClass("left-full");
+		$(this).parent().addClass("left-off");
+		
+		$(this).parent().parent().find(".right-product").removeClass("right-full");
+		$(this).parent().parent().find(".right-product").addClass("right-off");
+		
+		}
+	else
+	{
+		$(this).parent().removeClass("left-off");
+		$(this).parent().addClass("left-full");
+		
+		$(this).parent().parent().find(".right-product").removeClass("right-off");
+		$(this).parent().parent().find(".right-product").addClass("right-full");
+		
+		}
+	})	
+ 
+  /*左侧鼠标移入提示功能*/
+		$(".sBox ul li").mouseenter(function(){
+			if($(this).find("span:last-child").css("display")=="none")
+			{$(this).find("div").show();}
+			}).mouseleave(function(){$(this).find("div").hide();})	
+})
+</script>
+</body>
+</html>

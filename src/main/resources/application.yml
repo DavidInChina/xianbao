@@ -23,6 +23,14 @@ spring:
         testOnReturn: false
         poolPreparedStatements: true
         maxOpenPreparedStatements: 20
+        #thymeleaf start
+thymeleaf:
+    mode: HTML5
+    encoding: UTF-8
+    content-type: text/html
+    #开发时关闭缓存,不然没法看到实时页面
+    cache: false
+     #thymeleaf end
 mybatis:
   mapper-locations: classpath:mapping/*.xml
   type-aliases-package: com.ws.xianbao.bean
@@ -33,3 +41,5 @@ pagehelper:
     reasonable: true
     supportMethodsArguments: true
     params: count=countSql
+
+

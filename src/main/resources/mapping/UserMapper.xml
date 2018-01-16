@@ -3,13 +3,17 @@
 <mapper namespace="com.ws.xianbao.mapper.UserMapper" >
   <resultMap id="BaseResultMap" type="com.ws.xianbao.bean.User" >
     <id column="id" property="id" jdbcType="VARCHAR" />
-    <result column="username" property="username" jdbcType="VARCHAR" />
     <result column="account" property="account" jdbcType="VARCHAR" />
     <result column="password" property="password" jdbcType="VARCHAR" />
-    <result column="type" property="type" jdbcType="VARCHAR" />
+    <result column="username" property="username" jdbcType="VARCHAR" />
+    <result column="userhead" property="userhead" jdbcType="VARCHAR" />
+    <result column="usertype" property="usertype" jdbcType="VARCHAR" />
+    <result column="regtime" property="regtime" jdbcType="VARCHAR" />
+    <result column="lasttime" property="lasttime" jdbcType="VARCHAR" />
+    <result column="area" property="area" jdbcType="VARCHAR" />
   </resultMap>
   <sql id="Base_Column_List" >
-    id, username, account, password, type
+    id, account, password, username, userhead, usertype, regtime, lasttime, area
   </sql>
   <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.String" >
     select 
@@ -17,15 +21,31 @@
     from t_user
     where id = #{id,jdbcType=VARCHAR}
   </select>
+  <select id="indexUsers" resultMap="BaseResultMap" parameterType="java.lang.Integer">
+    select
+    <include refid="Base_Column_List" />
+    from t_user ORDER BY regtime LIMIT #{maxSize}
+  </select>
+  <select id="countNewUser" resultType="java.lang.Integer"  >
+    SELECT
+    count(*)
+    from t_user
+    where regtime &lt; #{currentTime,jdbcType=VARCHAR}
+    AND regtime  &gt; #{beforeTime,jdbcType=VARCHAR}
+  </select>
   <delete id="deleteByPrimaryKey" parameterType="java.lang.String" >
     delete from t_user
     where id = #{id,jdbcType=VARCHAR}
   </delete>
   <insert id="insert" parameterType="com.ws.xianbao.bean.User" >
-    insert into t_user (id, username, account, 
-      password, type)
-    values (#{id,jdbcType=VARCHAR}, #{username,jdbcType=VARCHAR}, #{account,jdbcType=VARCHAR}, 
-      #{password,jdbcType=VARCHAR}, #{type,jdbcType=VARCHAR})
+    insert into t_user (id, account, password, 
+      username, userhead, usertype, 
+      regtime, lasttime, area
+      )
+    values (#{id,jdbcType=VARCHAR}, #{account,jdbcType=VARCHAR}, #{password,jdbcType=VARCHAR}, 
+      #{username,jdbcType=VARCHAR}, #{userhead,jdbcType=VARCHAR}, #{usertype,jdbcType=VARCHAR}, 
+      #{regtime,jdbcType=VARCHAR}, #{lasttime,jdbcType=VARCHAR}, #{area,jdbcType=VARCHAR}
+      )
   </insert>
   <insert id="insertSelective" parameterType="com.ws.xianbao.bean.User" >
     insert into t_user
@@ -33,25 +53,34 @@
       <if test="id != null" >
         id,
       </if>
-      <if test="username != null" >
-        username,
-      </if>
       <if test="account != null" >
         account,
       </if>
       <if test="password != null" >
         password,
       </if>
-      <if test="type != null" >
-        type,
+      <if test="username != null" >
+        username,
+      </if>
+      <if test="userhead != null" >
+        userhead,
+      </if>
+      <if test="usertype != null" >
+        usertype,
+      </if>
+      <if test="regtime != null" >
+        regtime,
+      </if>
+      <if test="lasttime != null" >
+        lasttime,
+      </if>
+      <if test="area != null" >
+        area,
       </if>
     </trim>
     <trim prefix="values (" suffix=")" suffixOverrides="," >
       <if test="id != null" >
         #{id,jdbcType=VARCHAR},
-      </if>
-      <if test="username != null" >
-        #{username,jdbcType=VARCHAR},
       </if>
       <if test="account != null" >
         #{account,jdbcType=VARCHAR},
@@ -59,35 +88,66 @@
       <if test="password != null" >
         #{password,jdbcType=VARCHAR},
       </if>
-      <if test="type != null" >
-        #{type,jdbcType=VARCHAR},
+      <if test="username != null" >
+        #{username,jdbcType=VARCHAR},
+      </if>
+      <if test="userhead != null" >
+        #{userhead,jdbcType=VARCHAR},
+      </if>
+      <if test="usertype != null" >
+        #{usertype,jdbcType=VARCHAR},
+      </if>
+      <if test="regtime != null" >
+        #{regtime,jdbcType=VARCHAR},
+      </if>
+      <if test="lasttime != null" >
+        #{lasttime,jdbcType=VARCHAR},
+      </if>
+      <if test="area != null" >
+        #{area,jdbcType=VARCHAR},
       </if>
     </trim>
   </insert>
   <update id="updateByPrimaryKeySelective" parameterType="com.ws.xianbao.bean.User" >
     update t_user
     <set >
-      <if test="username != null" >
-        username = #{username,jdbcType=VARCHAR},
-      </if>
       <if test="account != null" >
         account = #{account,jdbcType=VARCHAR},
       </if>
       <if test="password != null" >
         password = #{password,jdbcType=VARCHAR},
       </if>
-      <if test="type != null" >
-        type = #{type,jdbcType=VARCHAR},
+      <if test="username != null" >
+        username = #{username,jdbcType=VARCHAR},
+      </if>
+      <if test="userhead != null" >
+        userhead = #{userhead,jdbcType=VARCHAR},
+      </if>
+      <if test="usertype != null" >
+        usertype = #{usertype,jdbcType=VARCHAR},
+      </if>
+      <if test="regtime != null" >
+        regtime = #{regtime,jdbcType=VARCHAR},
+      </if>
+      <if test="lasttime != null" >
+        lasttime = #{lasttime,jdbcType=VARCHAR},
+      </if>
+      <if test="area != null" >
+        area = #{area,jdbcType=VARCHAR},
       </if>
     </set>
     where id = #{id,jdbcType=VARCHAR}
   </update>
   <update id="updateByPrimaryKey" parameterType="com.ws.xianbao.bean.User" >
     update t_user
-    set username = #{username,jdbcType=VARCHAR},
-      account = #{account,jdbcType=VARCHAR},
+    set account = #{account,jdbcType=VARCHAR},
       password = #{password,jdbcType=VARCHAR},
-      type = #{type,jdbcType=VARCHAR}
+      username = #{username,jdbcType=VARCHAR},
+      userhead = #{userhead,jdbcType=VARCHAR},
+      usertype = #{usertype,jdbcType=VARCHAR},
+      regtime = #{regtime,jdbcType=VARCHAR},
+      lasttime = #{lasttime,jdbcType=VARCHAR},
+      area = #{area,jdbcType=VARCHAR}
     where id = #{id,jdbcType=VARCHAR}
   </update>
 </mapper>

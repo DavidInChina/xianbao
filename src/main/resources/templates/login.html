@@ -1,0 +1,106 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<meta name="description" content="闲宝后台管理登录页面" />
+<title>闲宝后台管理登录</title>
+    <link th:href="@{/css/login.css}" rel="stylesheet"/>
+
+</head>
+<body>
+<!-- begin -->
+<div id="login">
+    <div class="wrapper" style="background: white">
+        <div class="banner">闲宝,闲置更美好</div>
+        <div class="login">
+            <form action="#" method="post" class="container offset1 loginform">
+                <div id="owl-login">
+                    <div class="hand"></div>
+                    <div class="hand hand-r"></div>
+                    <div class="arms">
+                        <div class="arm"></div>
+                        <div class="arm arm-r"></div>
+                    </div>
+                </div>
+                <div class="pad">
+                    <div class="control-group">
+                        <div class="controls">
+                            <label for="account" class="control-label fa fa-envelope"></label>
+                            <input id="account" type="text" name="account" placeholder="账号"
+                                   tabindex="1" autofocus="autofocus" class="form-control input-medium"/>
+                        </div>
+                    </div>
+                    <div class="control-group">
+                        <div class="controls">
+                            <label for="password" class="control-label fa fa-asterisk"></label>
+                            <input id="password" type="password" name="password" placeholder="密码"
+                                   tabindex="2" class="form-control input-medium"/>
+                        </div>
+                    </div>
+                </div>
+                <div class="form-actions"><a href="#" tabindex="5" class="btn pull-left btn-link text-muted">
+                    忘记密码?</a>
+                    <button type="button" id="loginForm" tabindex="4" class="btn btn-primary">登录</button>
+                </div>
+            </form>
+        </div>
+    </div>
+    <script th:src="@{/script/jquery.min.js}"></script>
+    <script th:inline="javascript">
+      $(document).ready(function () {
+          /*<![CDATA[*/
+          var admininfo =  [[${session.user_info_session}]];
+          if (!(typeof(admininfo) == "undefined" || admininfo == null)) {
+              //已登录
+              window.location.href="index.html";
+          /*]]>*/
+        }
+        $('#login #password').focus(function() {
+            $('#owl-login').addClass('password');
+        }).blur(function() {
+            $('#owl-login').removeClass('password');
+        });
+        $('#loginForm').click(function () {
+            var account = $('#account').val();
+            var password = $('#password').val();
+            if (account.length >= 5) {
+                if (password.length >= 6) {
+            $.ajax({
+                type: 'post',
+                url: 'loginForm',
+                data: {account: account, password: password},
+                beforeSend: function (XMLHttpRequest) {
+
+                },
+                success: function (data, status) {
+                    //直接后台结束请求完成跳转
+                    if(0 == data.code){
+//                        $.session.set(USER_INFO_SESSION, JSON.stringify(data.data));//设置登录session
+                        window.location.href="index.html";
+                    }else{
+                        alert(data.msg);
+                    }
+                    //这里根据获取到的结果来跳转到主页
+                },
+                complete: function (XMLHttpRequest, textStatus) {
+
+                },
+                error: function () {
+                   window.location.href="error.html";
+                }
+            });
+                }else{
+                    alert("密码格式填写有误！");
+                    $('#password').focus();
+                }
+            }else{
+                alert("账号填写有误！");
+                $('#account').focus();
+            }
+        });
+    });
+    </script>
+</div>
+<!-- end -->
+</body>
+</html>

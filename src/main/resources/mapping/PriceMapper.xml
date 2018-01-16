@@ -1,0 +1,128 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.ws.xianbao.mapper.PriceMapper" >
+  <resultMap id="BaseResultMap" type="com.ws.xianbao.bean.Price" >
+    <id column="id" property="id" jdbcType="VARCHAR" />
+    <result column="userid" property="userid" jdbcType="VARCHAR" />
+    <result column="username" property="username" jdbcType="VARCHAR" />
+    <result column="userhead" property="userhead" jdbcType="VARCHAR" />
+    <result column="thingsid" property="thingsid" jdbcType="VARCHAR" />
+    <result column="pricetime" property="pricetime" jdbcType="VARCHAR" />
+    <result column="pricedes" property="pricedes" jdbcType="VARCHAR" />
+    <result column="price" property="price" jdbcType="VARCHAR" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    id, userid, username, userhead, thingsid, pricetime, pricedes, price
+  </sql>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.String" >
+    select 
+    <include refid="Base_Column_List" />
+    from t_price
+    where id = #{id,jdbcType=VARCHAR}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.String" >
+    delete from t_price
+    where id = #{id,jdbcType=VARCHAR}
+  </delete>
+  <insert id="insert" parameterType="com.ws.xianbao.bean.Price" >
+    insert into t_price (id, userid, username, 
+      userhead, thingsid, pricetime, 
+      pricedes, price)
+    values (#{id,jdbcType=VARCHAR}, #{userid,jdbcType=VARCHAR}, #{username,jdbcType=VARCHAR}, 
+      #{userhead,jdbcType=VARCHAR}, #{thingsid,jdbcType=VARCHAR}, #{pricetime,jdbcType=VARCHAR}, 
+      #{pricedes,jdbcType=VARCHAR}, #{price,jdbcType=VARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="com.ws.xianbao.bean.Price" >
+    insert into t_price
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        id,
+      </if>
+      <if test="userid != null" >
+        userid,
+      </if>
+      <if test="username != null" >
+        username,
+      </if>
+      <if test="userhead != null" >
+        userhead,
+      </if>
+      <if test="thingsid != null" >
+        thingsid,
+      </if>
+      <if test="pricetime != null" >
+        pricetime,
+      </if>
+      <if test="pricedes != null" >
+        pricedes,
+      </if>
+      <if test="price != null" >
+        price,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        #{id,jdbcType=VARCHAR},
+      </if>
+      <if test="userid != null" >
+        #{userid,jdbcType=VARCHAR},
+      </if>
+      <if test="username != null" >
+        #{username,jdbcType=VARCHAR},
+      </if>
+      <if test="userhead != null" >
+        #{userhead,jdbcType=VARCHAR},
+      </if>
+      <if test="thingsid != null" >
+        #{thingsid,jdbcType=VARCHAR},
+      </if>
+      <if test="pricetime != null" >
+        #{pricetime,jdbcType=VARCHAR},
+      </if>
+      <if test="pricedes != null" >
+        #{pricedes,jdbcType=VARCHAR},
+      </if>
+      <if test="price != null" >
+        #{price,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.ws.xianbao.bean.Price" >
+    update t_price
+    <set >
+      <if test="userid != null" >
+        userid = #{userid,jdbcType=VARCHAR},
+      </if>
+      <if test="username != null" >
+        username = #{username,jdbcType=VARCHAR},
+      </if>
+      <if test="userhead != null" >
+        userhead = #{userhead,jdbcType=VARCHAR},
+      </if>
+      <if test="thingsid != null" >
+        thingsid = #{thingsid,jdbcType=VARCHAR},
+      </if>
+      <if test="pricetime != null" >
+        pricetime = #{pricetime,jdbcType=VARCHAR},
+      </if>
+      <if test="pricedes != null" >
+        pricedes = #{pricedes,jdbcType=VARCHAR},
+      </if>
+      <if test="price != null" >
+        price = #{price,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where id = #{id,jdbcType=VARCHAR}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.ws.xianbao.bean.Price" >
+    update t_price
+    set userid = #{userid,jdbcType=VARCHAR},
+      username = #{username,jdbcType=VARCHAR},
+      userhead = #{userhead,jdbcType=VARCHAR},
+      thingsid = #{thingsid,jdbcType=VARCHAR},
+      pricetime = #{pricetime,jdbcType=VARCHAR},
+      pricedes = #{pricedes,jdbcType=VARCHAR},
+      price = #{price,jdbcType=VARCHAR}
+    where id = #{id,jdbcType=VARCHAR}
+  </update>
+</mapper>

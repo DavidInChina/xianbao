@@ -1,0 +1,165 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.ws.xianbao.mapper.ThingsMapper" >
+  <resultMap id="BaseResultMap" type="com.ws.xianbao.bean.Things" >
+    <id column="id" property="id" jdbcType="VARCHAR" />
+    <result column="thingsname" property="thingsname" jdbcType="VARCHAR" />
+    <result column="userid" property="userid" jdbcType="VARCHAR" />
+    <result column="userhead" property="userhead" jdbcType="VARCHAR" />
+    <result column="username" property="username" jdbcType="VARCHAR" />
+    <result column="thingsdes" property="thingsdes" jdbcType="VARCHAR" />
+    <result column="thingsimgs" property="thingsimgs" jdbcType="VARCHAR" />
+    <result column="thingsprice" property="thingsprice" jdbcType="VARCHAR" />
+    <result column="uptime" property="uptime" jdbcType="VARCHAR" />
+    <result column="thingsstatus" property="thingsstatus" jdbcType="VARCHAR" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    id, thingsname, userid, userhead, username, thingsdes, thingsimgs, thingsprice, uptime, 
+    thingsstatus
+  </sql>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.String" >
+    select 
+    <include refid="Base_Column_List" />
+    from t_things
+    where id = #{id,jdbcType=VARCHAR}
+  </select>
+  <select id="indexThings" resultMap="BaseResultMap" parameterType="java.lang.Integer">
+    select
+    <include refid="Base_Column_List" />
+    from t_things ORDER BY uptime LIMIT #{maxSize}
+  </select>
+  <select id="countNewThing" resultType="java.lang.Integer"  >
+    SELECT
+    count(*)
+    from t_things
+    where uptime &lt; #{currentTime,jdbcType=VARCHAR}
+    AND uptime  &gt; #{beforeTime,jdbcType=VARCHAR}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.String" >
+    delete from t_things
+    where id = #{id,jdbcType=VARCHAR}
+  </delete>
+  <insert id="insert" parameterType="com.ws.xianbao.bean.Things" >
+    insert into t_things (id, thingsname, userid, 
+      userhead, username, thingsdes, 
+      thingsimgs, thingsprice, uptime, 
+      thingsstatus)
+    values (#{id,jdbcType=VARCHAR}, #{thingsname,jdbcType=VARCHAR}, #{userid,jdbcType=VARCHAR}, 
+      #{userhead,jdbcType=VARCHAR}, #{username,jdbcType=VARCHAR}, #{thingsdes,jdbcType=VARCHAR}, 
+      #{thingsimgs,jdbcType=VARCHAR}, #{thingsprice,jdbcType=VARCHAR}, #{uptime,jdbcType=VARCHAR}, 
+      #{thingsstatus,jdbcType=VARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="com.ws.xianbao.bean.Things" >
+    insert into t_things
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        id,
+      </if>
+      <if test="thingsname != null" >
+        thingsname,
+      </if>
+      <if test="userid != null" >
+        userid,
+      </if>
+      <if test="userhead != null" >
+        userhead,
+      </if>
+      <if test="username != null" >
+        username,
+      </if>
+      <if test="thingsdes != null" >
+        thingsdes,
+      </if>
+      <if test="thingsimgs != null" >
+        thingsimgs,
+      </if>
+      <if test="thingsprice != null" >
+        thingsprice,
+      </if>
+      <if test="uptime != null" >
+        uptime,
+      </if>
+      <if test="thingsstatus != null" >
+        thingsstatus,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        #{id,jdbcType=VARCHAR},
+      </if>
+      <if test="thingsname != null" >
+        #{thingsname,jdbcType=VARCHAR},
+      </if>
+      <if test="userid != null" >
+        #{userid,jdbcType=VARCHAR},
+      </if>
+      <if test="userhead != null" >
+        #{userhead,jdbcType=VARCHAR},
+      </if>
+      <if test="username != null" >
+        #{username,jdbcType=VARCHAR},
+      </if>
+      <if test="thingsdes != null" >
+        #{thingsdes,jdbcType=VARCHAR},
+      </if>
+      <if test="thingsimgs != null" >
+        #{thingsimgs,jdbcType=VARCHAR},
+      </if>
+      <if test="thingsprice != null" >
+        #{thingsprice,jdbcType=VARCHAR},
+      </if>
+      <if test="uptime != null" >
+        #{uptime,jdbcType=VARCHAR},
+      </if>
+      <if test="thingsstatus != null" >
+        #{thingsstatus,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.ws.xianbao.bean.Things" >
+    update t_things
+    <set >
+      <if test="thingsname != null" >
+        thingsname = #{thingsname,jdbcType=VARCHAR},
+      </if>
+      <if test="userid != null" >
+        userid = #{userid,jdbcType=VARCHAR},
+      </if>
+      <if test="userhead != null" >
+        userhead = #{userhead,jdbcType=VARCHAR},
+      </if>
+      <if test="username != null" >
+        username = #{username,jdbcType=VARCHAR},
+      </if>
+      <if test="thingsdes != null" >
+        thingsdes = #{thingsdes,jdbcType=VARCHAR},
+      </if>
+      <if test="thingsimgs != null" >
+        thingsimgs = #{thingsimgs,jdbcType=VARCHAR},
+      </if>
+      <if test="thingsprice != null" >
+        thingsprice = #{thingsprice,jdbcType=VARCHAR},
+      </if>
+      <if test="uptime != null" >
+        uptime = #{uptime,jdbcType=VARCHAR},
+      </if>
+      <if test="thingsstatus != null" >
+        thingsstatus = #{thingsstatus,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where id = #{id,jdbcType=VARCHAR}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.ws.xianbao.bean.Things" >
+    update t_things
+    set thingsname = #{thingsname,jdbcType=VARCHAR},
+      userid = #{userid,jdbcType=VARCHAR},
+      userhead = #{userhead,jdbcType=VARCHAR},
+      username = #{username,jdbcType=VARCHAR},
+      thingsdes = #{thingsdes,jdbcType=VARCHAR},
+      thingsimgs = #{thingsimgs,jdbcType=VARCHAR},
+      thingsprice = #{thingsprice,jdbcType=VARCHAR},
+      uptime = #{uptime,jdbcType=VARCHAR},
+      thingsstatus = #{thingsstatus,jdbcType=VARCHAR}
+    where id = #{id,jdbcType=VARCHAR}
+  </update>
+</mapper>
