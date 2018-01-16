@@ -12,10 +12,11 @@
     <result column="thingsprice" property="thingsprice" jdbcType="VARCHAR" />
     <result column="uptime" property="uptime" jdbcType="VARCHAR" />
     <result column="thingsstatus" property="thingsstatus" jdbcType="VARCHAR" />
+    <result column="priceid" property="priceid" jdbcType="VARCHAR" />
   </resultMap>
   <sql id="Base_Column_List" >
     id, thingsname, userid, userhead, username, thingsdes, thingsimgs, thingsprice, uptime, 
-    thingsstatus
+    thingsstatus,priceid
   </sql>
   <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.String" >
     select 
@@ -74,6 +75,21 @@
     from t_things WHERE  thingsstatus = #{type,jdbcType=VARCHAR}
     ORDER BY uptime
   </select>
+
+  <select id="normalThingsList" resultMap="BaseResultMap" parameterType="java.lang.String">
+    select
+    <include refid="Base_Column_List" />
+    from t_things WHERE  thingsstatus = '2' AND userid != #{userId,jdbcType=VARCHAR}
+    ORDER BY uptime
+  </select>
+
+  <select id="ownThingsList" resultMap="BaseResultMap" parameterType="java.lang.String">
+    select
+    <include refid="Base_Column_List" />
+    from t_things WHERE  userid == #{userId,jdbcType=VARCHAR}
+    ORDER BY uptime
+  </select>
+
   <select id="allThings2" resultMap="BaseResultMap" parameterType="java.lang.String">
     select
     <include refid="Base_Column_List" />
@@ -96,11 +112,11 @@
     insert into t_things (id, thingsname, userid, 
       userhead, username, thingsdes, 
       thingsimgs, thingsprice, uptime, 
-      thingsstatus)
+      thingsstatus,priceid)
     values (#{id,jdbcType=VARCHAR}, #{thingsname,jdbcType=VARCHAR}, #{userid,jdbcType=VARCHAR}, 
       #{userhead,jdbcType=VARCHAR}, #{username,jdbcType=VARCHAR}, #{thingsdes,jdbcType=VARCHAR}, 
       #{thingsimgs,jdbcType=VARCHAR}, #{thingsprice,jdbcType=VARCHAR}, #{uptime,jdbcType=VARCHAR}, 
-      #{thingsstatus,jdbcType=VARCHAR})
+      #{thingsstatus,jdbcType=VARCHAR}),#{priceid,jdbcType=VARCHAR})
   </insert>
   <insert id="insertSelective" parameterType="com.ws.xianbao.bean.Things" >
     insert into t_things
@@ -133,7 +149,10 @@
         uptime,
       </if>
       <if test="thingsstatus != null" >
-        thingsstatus,
+      thingsstatus,
+    </if>
+      <if test="priceid != null" >
+        priceid,
       </if>
     </trim>
     <trim prefix="values (" suffix=")" suffixOverrides="," >
@@ -167,6 +186,9 @@
       <if test="thingsstatus != null" >
         #{thingsstatus,jdbcType=VARCHAR},
       </if>
+      <if test="priceid != null" >
+        #{priceid,jdbcType=VARCHAR},
+      </if>
     </trim>
   </insert>
   <update id="updateByPrimaryKeySelective" parameterType="com.ws.xianbao.bean.Things" >
@@ -199,6 +221,9 @@
       <if test="thingsstatus != null" >
         thingsstatus = #{thingsstatus,jdbcType=VARCHAR},
       </if>
+      <if test="priceid != null" >
+        priceid = #{priceid,jdbcType=VARCHAR},
+      </if>
     </set>
     where id = #{id,jdbcType=VARCHAR}
   </update>
@@ -213,6 +238,7 @@
       thingsprice = #{thingsprice,jdbcType=VARCHAR},
       uptime = #{uptime,jdbcType=VARCHAR},
       thingsstatus = #{thingsstatus,jdbcType=VARCHAR}
+      , priceid = #{priceid,jdbcType=VARCHAR}
     where id = #{id,jdbcType=VARCHAR}
   </update>
 </mapper>

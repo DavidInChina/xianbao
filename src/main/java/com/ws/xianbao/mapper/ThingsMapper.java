@@ -1,5 +1,6 @@
 package com.ws.xianbao.mapper;
 
+import com.ws.xianbao.bean.Price;
 import com.ws.xianbao.bean.Things;
 import com.ws.xianbao.bean.User;
 import org.apache.ibatis.annotations.Param;
@@ -16,6 +17,10 @@ public interface ThingsMapper {
     List<Things> indexThings(int maxSize);//首页指定条数据
 
     List<Things> allThings(String type);//根据状态获取所有物品
+
+    List<Things> normalThingsList(String userId);//获取非该用户所有待竞价物品
+
+    List<Things> ownThingsList(String userId);//获取该用户所有物品
 
     List<Things> allThings2(@Param("type1")String type1,@Param("type2")String type2);//根据状态获取所有物品
 

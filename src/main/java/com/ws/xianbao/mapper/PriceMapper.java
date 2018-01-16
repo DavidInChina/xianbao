@@ -2,6 +2,8 @@ package com.ws.xianbao.mapper;
 
 import com.ws.xianbao.bean.Price;
 
+import java.util.List;
+
 public interface PriceMapper {
     int deleteByPrimaryKey(String id);
 
@@ -14,4 +16,7 @@ public interface PriceMapper {
     int updateByPrimaryKeySelective(Price record);
 
     int updateByPrimaryKey(Price record);
+
+
+    List<Price> priceList(String thingsId);//用户获取自己物品竞价列表
 }

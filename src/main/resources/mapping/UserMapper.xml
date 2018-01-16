@@ -18,10 +18,27 @@
     id, account, password, username, userhead, usertype, regtime, lasttime, area,publishcount,pricecount
   </sql>
   <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.String" >
-    select 
+  select
+  <include refid="Base_Column_List" />
+  from t_user
+  where id = #{id,jdbcType=VARCHAR}
+</select>
+
+  <update id="countLogin" parameterType="java.lang.String" >
+    update t_user
+    <set>
+      <if test="time != null" >
+        lasttime = #{time,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where id = #{userId,jdbcType=VARCHAR}
+  </update>
+
+  <select id="selectByAccount" resultMap="BaseResultMap" parameterType="java.lang.String" >
+    select
     <include refid="Base_Column_List" />
     from t_user
-    where id = #{id,jdbcType=VARCHAR}
+    where account = #{account,jdbcType=VARCHAR}
   </select>
   <select id="indexUsers" resultMap="BaseResultMap" parameterType="java.lang.Integer">
     select

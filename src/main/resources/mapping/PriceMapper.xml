@@ -24,6 +24,14 @@
     delete from t_price
     where id = #{id,jdbcType=VARCHAR}
   </delete>
+
+  <select id="priceList" resultMap="BaseResultMap" parameterType="java.lang.String">
+    select
+    <include refid="Base_Column_List" />
+    from t_price WHERE  thingsid = #{thingsId,jdbcType=VARCHAR}
+    ORDER BY pricetime
+  </select>
+
   <insert id="insert" parameterType="com.ws.xianbao.bean.Price" >
     insert into t_price (id, userid, username, 
       userhead, thingsid, pricetime, 

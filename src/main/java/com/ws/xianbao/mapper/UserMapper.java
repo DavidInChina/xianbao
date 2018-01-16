@@ -21,6 +21,11 @@ public interface UserMapper {
     User selectByPrimaryKey(String id);
 
 
+    User selectByAccount(String account);
+
+    int countLogin(@Param("userId")String userId,@Param("time")String time);
+
+
     int updateByPrimaryKeySelective(User record);
 
     int updateByPrimaryKey(User record);

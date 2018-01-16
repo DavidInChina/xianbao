@@ -19,6 +19,16 @@ public class Things {
 
     private String uptime;
 
+    private String priceid;//成交的出价id，默认为0
+
+    public String getPriceid() {
+        return priceid;
+    }
+
+    public void setPriceid(String priceid) {
+        this.priceid = priceid;
+    }
+
     private String thingsstatus;
 
     public String getId() {
